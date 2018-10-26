@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 
 import com.eyos.ofir.guessinggame.Category.Category;
 import com.eyos.ofir.guessinggame.Category.CategoryDao;
+import com.eyos.ofir.guessinggame.Difficulty.Difficulty;
+import com.eyos.ofir.guessinggame.Difficulty.DifficultyDao;
 import com.eyos.ofir.guessinggame.SubCategory.SubCategory;
 import com.eyos.ofir.guessinggame.SubCategory.SubCategoryDao;
 
@@ -14,26 +16,26 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Category.class, SubCategory.class}, version  = 3, exportSchema = false)
+@Database(entities = {Category.class, SubCategory.class, Difficulty.class}, version  = 4, exportSchema = false)
 public abstract class MainDb extends RoomDatabase {
 
     private static MainDb INSTANCE;
 
     public abstract CategoryDao categoryDao();
     public abstract SubCategoryDao subCategoryDao();
+    public abstract DifficultyDao difficultyDao();
 
     public synchronized static MainDb getInstance(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     MainDb.class, "database")
-                    .addCallback(roomCallback)
                     .fallbackToDestructiveMigration()
                     .build();
         }
         return INSTANCE;
     }
 
-    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+  /*  private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -57,5 +59,5 @@ public abstract class MainDb extends RoomDatabase {
 
             return null;
         }
-    }
+    }*/
 }

@@ -6,7 +6,10 @@ import android.os.AsyncTask;
 import com.eyos.ofir.guessinggame.Category.Category;
 import com.eyos.ofir.guessinggame.Category.CategoryDao;
 import com.eyos.ofir.guessinggame.DataBase.DataBaseProvider.CategoriesProvider;
+import com.eyos.ofir.guessinggame.DataBase.DataBaseProvider.DifficultyProvider;
 import com.eyos.ofir.guessinggame.DataBase.DataBaseProvider.SubCategoriesProvier;
+import com.eyos.ofir.guessinggame.Difficulty.Difficulty;
+import com.eyos.ofir.guessinggame.Difficulty.DifficultyDao;
 import com.eyos.ofir.guessinggame.SubCategory.SubCategory;
 import com.eyos.ofir.guessinggame.SubCategory.SubCategoryDao;
 
@@ -18,20 +21,27 @@ public class MainRepo {
 
     private CategoryDao categoryDao;
     private SubCategoryDao subCategoryDao;
+    private DifficultyDao difficultyDao;
 
     private LiveData<List<Category>> categoryList;
+    private  LiveData<List<Difficulty>> difficultyList;
 
     public MainRepo(Application application) {
         MainDb database = MainDb.getInstance(application);
         categoryDao = database.categoryDao();
         subCategoryDao = database.subCategoryDao();
+        difficultyDao = database.difficultyDao();
+
         categoryList = categoryDao.getAllCategories();
+        difficultyList = difficultyDao.getAllDifficulties();
     }
 
 
     public void populateDB(){
-        new populateDBAsyncTask(categoryDao, subCategoryDao).execute();
+        new populateDBAsyncTask(categoryDao, subCategoryDao, difficultyDao).execute();
     }
+
+    public LiveData<List<Difficulty>> getDifficultyList() { return  difficultyList;}
 
     public LiveData<List<SubCategory>> getMatchingSubCategories(long categoryId){
         return subCategoryDao.findMatchingSubCategories(categoryId);
@@ -55,10 +65,12 @@ public class MainRepo {
 
         private CategoryDao categoryDao;
         private SubCategoryDao subCategoryDao;
+        private DifficultyDao difficultyDao;
 
-        public populateDBAsyncTask(CategoryDao categoryDao, SubCategoryDao subCategoryDao) {
+        public populateDBAsyncTask(CategoryDao categoryDao, SubCategoryDao subCategoryDao, DifficultyDao difficultyDao) {
             this.categoryDao = categoryDao;
             this.subCategoryDao = subCategoryDao;
+            this.difficultyDao = difficultyDao;
         }
 
 
@@ -68,6 +80,7 @@ public class MainRepo {
 
             CategoriesProvider.addCategoriesToDB(categoryDao);
             SubCategoriesProvier.addSsubCategoriesToDB(subCategoryDao);
+            DifficultyProvider.addDiffucltiesToDb(difficultyDao);
             return null;
         }
     }

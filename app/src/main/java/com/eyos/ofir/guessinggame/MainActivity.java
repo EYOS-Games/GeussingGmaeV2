@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.eyos.ofir.guessinggame.Utiliteis.GridSpacingItemDecoration;
 import com.eyos.ofir.guessinggame.Utiliteis.PrepareClass;
 import com.eyos.ofir.guessinggame.Category.Category;
-import com.eyos.ofir.guessinggame.Adapter.CategoryAdapter;
+import com.eyos.ofir.guessinggame.Adapter.Adapter;
 import com.eyos.ofir.guessinggame.Category.CategoryViewModel;
 
 
@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     private  CategoryViewModel CategoryViewModel ;
     private RecyclerView mRecyclerView;
-    private CategoryAdapter mAdapter;
-    private List<Category> mCategoryList;
+    private Adapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView =  findViewById(R.id.recycler_view);
 
-        mAdapter = new CategoryAdapter(this, 0);
+        mAdapter = new Adapter(this, Common.MAIN_SCREEN);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10, this), true));

@@ -1,11 +1,14 @@
 package com.eyos.ofir.guessinggame.Category;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "category_table")
-public class Category {
+public class Category implements Parcelable {
 
     //@PrimaryKey(autoGenerate = true)
     @PrimaryKey(autoGenerate = false)
@@ -27,6 +30,25 @@ public class Category {
         this.categoryImageUrl = categoryImageUrl;
         this.categoryProgress = categoryProgress;
     }
+
+    protected Category(Parcel in) {
+        categoryId = in.readLong();
+        categoryName = in.readString();
+        categoryImageUrl = in.readString();
+        categoryProgress = in.readInt();
+    }
+
+    public static final Creator<Category> CREATOR = new Creator<Category>() {
+        @Override
+        public Category createFromParcel(Parcel in) {
+            return new Category(in);
+        }
+
+        @Override
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
 
     public long getCategoryId() {
         return categoryId;
@@ -61,5 +83,16 @@ public class Category {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(categoryId);
+        dest.writeString(categoryName);
+        dest.writeString(categoryImageUrl);
+        dest.writeInt(categoryProgress);
+    }
 }

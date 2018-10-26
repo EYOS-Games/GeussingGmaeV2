@@ -25,6 +25,9 @@ public class CategoryViewModel extends AndroidViewModel {
     public void populateDB(){
         mainRepo.populateDB();
     }
+    public LiveData<List<Category>> getCategoryList(){
+        return  categoryList;
+    }
 
     public void Insert(Category category){
         mainRepo.insertCategory(category);
@@ -34,7 +37,5 @@ public class CategoryViewModel extends AndroidViewModel {
         mainRepo.updateCategory(category);
     }
 
-    public LiveData<List<Category>> getCategoryList(){
-        return  categoryList;
-    }
+
 }
