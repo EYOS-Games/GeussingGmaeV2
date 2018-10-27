@@ -50,22 +50,29 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        String title = "",img_url = "", key = "";
+        String title = "", img_url = "", key = "";
         long id = 0;
         Category currentCategory = null;
-        SubCategory  currentSubCategory  = null;
-        if (currentScreen == Common.MAIN_SCREEN){
+        SubCategory currentSubCategory = null;
+        Difficulty currentDifficulty = null;
+        if (currentScreen == Common.MAIN_SCREEN) {
             currentCategory = categoryList.get(position);
             title = currentCategory.getCategoryName();
             id = currentCategory.getCategoryId();
             img_url = currentCategory.getCategoryImageUrl();
-            key =  Common.SELECTED_CATEGORY_KEY;
-        }else if (currentScreen == Common.SUB_CATEGORY_SCREEN){
+            key = Common.SELECTED_CATEGORY_KEY;
+        } else if (currentScreen == Common.SUB_CATEGORY_SCREEN) {
             currentSubCategory = subCategoryList.get(position);
-            title  = currentSubCategory.getSubCategoryName();
+            title = currentSubCategory.getSubCategoryName();
             id = currentSubCategory.getSubCategoryID();
             img_url = currentSubCategory.getSubCategoryImgUrl();
-            key = Common.SELECTED_SUB_CATEGORY_KEY_;
+            key = Common.SELECTED_SUB_CATEGORY_KEY;
+        } else if (currentScreen == Common.DIFFICULTY_SCREEN) {
+            currentDifficulty = difficultyList.get(position);
+            title = currentDifficulty.getDifficultyName();
+            id = currentDifficulty.getDifficultyId();
+            img_url = currentDifficulty.getDifficultyImgUrl();
+            key = Common.SELECTED_DIFFICULTY_KEY;
         }
 
         holder.title.setText(title);
@@ -75,31 +82,35 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         Glide.with(mContext).load(img_url).into(holder.thumbnail);
 
 
-        long slectedId = id;
         Category selectedCurrentCategory = currentCategory;
+        String selectedKey = key;
+        SubCategory selectedCurrentSubCategory = currentSubCategory;
         holder.thumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent;
-               if (currentScreen == Common.MAIN_SCREEN){
-                   intent = new Intent(mContext, SubCategoryActivity.class);
-                   intent.putExtra(Common.SELECTED_CATEGORY_KEY, selectedCurrentCategory);
-                   mContext.startActivity(intent);
-               } else if (currentScreen == Common.SUB_CATEGORY_SCREEN){
-                   intent = new Intent(mContext, DifficultyActivity.class);
-                   mContext.startActivity(intent);
-               }
+                if (currentScreen == Common.MAIN_SCREEN) {
+                    intent = new Intent(mContext, SubCategoryActivity.class);
+                    intent.putExtra(selectedKey, selectedCurrentCategory);
+                    mContext.startActivity(intent);
+                } else if (currentScreen == Common.SUB_CATEGORY_SCREEN) {
+                    intent = new Intent(mContext, DifficultyActivity.class);
+                    intent.putExtra(selectedKey, selectedCurrentSubCategory);
+                    mContext.startActivity(intent);
+                }
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        int size  = 0;
-        if(currentScreen == Common.MAIN_SCREEN)
-            size =  categoryList.size();
-        else if(currentScreen == Common.SUB_CATEGORY_SCREEN)
-            size =  subCategoryList.size();
+        int size = 0;
+        if (currentScreen == Common.MAIN_SCREEN)
+            size = categoryList.size();
+        else if (currentScreen == Common.SUB_CATEGORY_SCREEN)
+            size = subCategoryList.size();
+        else if (currentScreen == Common.DIFFICULTY_SCREEN)
+            size = difficultyList.size();
 
         return size;
     }
@@ -109,12 +120,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void setSubCategories(List<SubCategory> subCategories){
+    public void setSubCategories(List<SubCategory> subCategories) {
         this.subCategoryList = subCategories;
         notifyDataSetChanged();
     }
 
-    public  void setDiffiuclyies(List<Difficulty> diffiuclties){
+    public void setDiffiuclyies(List<Difficulty> diffiuclties) {
         this.difficultyList = diffiuclties;
         notifyDataSetChanged();
     }

@@ -7,7 +7,6 @@ public class Common {
     public static final int DIFFICULTY_SCREEN  = 2;
 
     public static final String SELECTED_CATEGORY_KEY  = "SELECTED_CATEGORY";
-    public static final String SELECTED_CATEGORY_IMAGE = "f";
-    public static final String SELECTED_SUB_CATEGORY_KEY_= "SELECTED_SUB_CATEGORY";
-    public static final String SELECTED_DIFFICULTY =  "SELECTED_DIFFIUCLTY";
+    public static final String SELECTED_SUB_CATEGORY_KEY = "SELECTED_SUB_CATEGORY";
+    public static final String SELECTED_DIFFICULTY_KEY =  "SELECTED_DIFFIUCLTY";
 }

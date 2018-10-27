@@ -10,10 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.eyos.ofir.guessinggame.Adapter.Adapter;
-import com.eyos.ofir.guessinggame.Category.Category;
-import com.eyos.ofir.guessinggame.Category.CategoryViewModel;
 import com.eyos.ofir.guessinggame.Difficulty.Difficulty;
 import com.eyos.ofir.guessinggame.Difficulty.DifficultyViewModel;
+import com.eyos.ofir.guessinggame.SubCategory.SubCategory;
 import com.eyos.ofir.guessinggame.Utiliteis.GridSpacingItemDecoration;
 import com.eyos.ofir.guessinggame.Utiliteis.PrepareClass;
 
@@ -33,7 +32,7 @@ public class DifficultyActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recycler_view);
 
-        mAdapter = new Adapter(this, Common.MAIN_SCREEN);
+        mAdapter = new Adapter(this, Common.DIFFICULTY_SCREEN);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10, this), true));
@@ -43,6 +42,8 @@ public class DifficultyActivity extends AppCompatActivity {
 
         difficultyViewModel = ViewModelProviders.of(this).get(DifficultyViewModel.class);
 
+        SubCategory subCategory = getSelectedSubCategory();
+
         difficultyViewModel.getDifficultyList().observe(this, new Observer<List<Difficulty>>() {
             @Override
             public void onChanged(List<Difficulty> difficulties) {
@@ -51,7 +52,11 @@ public class DifficultyActivity extends AppCompatActivity {
         });
 
 
-        PrepareClass.setMainThemereImg("https://zululandobserver.co.za/wp-content/uploads/sites/56/2018/07/Movie.jpg", this, findViewById(R.id.image_view_header));
+        PrepareClass.setMainThemereImg(subCategory.getSubCategoryImgUrl(), this, findViewById(R.id.image_view_header));
 
+    }
+
+    private SubCategory getSelectedSubCategory(){
+        return     getIntent().getParcelableExtra(Common.SELECTED_SUB_CATEGORY_KEY);
     }
 }

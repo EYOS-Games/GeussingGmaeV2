@@ -1,5 +1,8 @@
 package com.eyos.ofir.guessinggame.SubCategory;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.eyos.ofir.guessinggame.Category.Category;
 
 import androidx.room.ColumnInfo;
@@ -19,7 +22,7 @@ import androidx.room.PrimaryKey;
             , parentColumns = "category_id"
             , childColumns = "matching_category_id"
             , onDelete = ForeignKey.CASCADE))
-public class SubCategory {
+public class SubCategory implements Parcelable {
 
     @ColumnInfo(name = "sub_category_id")
     private long subCategoryID;
@@ -40,6 +43,25 @@ public class SubCategory {
         this.subCategoryName = subCategoryName;
         SubCategoryImgUrl = subCategoryImgUrl;
     }
+
+    protected SubCategory(Parcel in) {
+        subCategoryID = in.readLong();
+        matchingCategoryId = in.readLong();
+        subCategoryName = in.readString();
+        SubCategoryImgUrl = in.readString();
+    }
+
+    public static final Creator<SubCategory> CREATOR = new Creator<SubCategory>() {
+        @Override
+        public SubCategory createFromParcel(Parcel in) {
+            return new SubCategory(in);
+        }
+
+        @Override
+        public SubCategory[] newArray(int size) {
+            return new SubCategory[size];
+        }
+    };
 
     public long getSubCategoryID() {
         return subCategoryID;
@@ -73,5 +95,18 @@ public class SubCategory {
 
     public void setSubCategoryImgUrl(String subCategoryImgUrl) {
         SubCategoryImgUrl = subCategoryImgUrl;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(subCategoryID);
+        dest.writeLong(matchingCategoryId);
+        dest.writeString(subCategoryName);
+        dest.writeString(SubCategoryImgUrl);
     }
 }
