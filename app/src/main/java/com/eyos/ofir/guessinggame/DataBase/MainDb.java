@@ -7,6 +7,8 @@ import com.eyos.ofir.guessinggame.Category.Category;
 import com.eyos.ofir.guessinggame.Category.CategoryDao;
 import com.eyos.ofir.guessinggame.Difficulty.Difficulty;
 import com.eyos.ofir.guessinggame.Difficulty.DifficultyDao;
+import com.eyos.ofir.guessinggame.SelectedQuestion.SelectQuestion;
+import com.eyos.ofir.guessinggame.SelectedQuestion.SelectedQuestionDao;
 import com.eyos.ofir.guessinggame.SubCategory.SubCategory;
 import com.eyos.ofir.guessinggame.SubCategory.SubCategoryDao;
 
@@ -16,7 +18,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Category.class, SubCategory.class, Difficulty.class}, version  = 4, exportSchema = false)
+@Database(entities = {Category.class, SubCategory.class, Difficulty.class, SelectQuestion.class}, version  = 5, exportSchema = false)
 public abstract class MainDb extends RoomDatabase {
 
     private static MainDb INSTANCE;
@@ -24,6 +26,7 @@ public abstract class MainDb extends RoomDatabase {
     public abstract CategoryDao categoryDao();
     public abstract SubCategoryDao subCategoryDao();
     public abstract DifficultyDao difficultyDao();
+    public abstract SelectedQuestionDao selectedQuestionDao();
 
     public synchronized static MainDb getInstance(Context context) {
         if (INSTANCE == null) {
