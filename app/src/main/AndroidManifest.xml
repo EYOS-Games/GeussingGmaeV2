@@ -3,18 +3,18 @@
     package="com.eyos.ofir.guessinggame">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainActivity"
+            android:name=".QuestionActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,8 @@
         </activity>
         <activity android:name=".SubCategoryActivity" />
         <activity android:name=".DifficultyActivity" />
-        <activity android:name=".SelectQuestionActivity"></activity>
+        <activity android:name=".SelectQuestionActivity" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
