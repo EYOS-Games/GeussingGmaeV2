@@ -6,11 +6,16 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.GridView;
 
+import com.eyos.ofir.guessinggame.Adapter.GridViewAnswerAdapter;
+import com.eyos.ofir.guessinggame.Adapter.GridViewSuggestAdapter;
 import com.eyos.ofir.guessinggame.Adapter.QuestionAdapter;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectQuestion;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectedQuestionViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionActivity extends AppCompatActivity {
@@ -18,6 +23,10 @@ public class QuestionActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private QuestionAdapter questionAdapter;
     private SelectedQuestionViewModel selectedQuestionViewModel;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,5 +45,10 @@ public class QuestionActivity extends AppCompatActivity {
                 questionAdapter.setSelectQuestions(selectQuestions);
             }
         });
+
+        ////
+
+
+
     }
 }
