@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.eyos.ofir.guessinggame.Adapter.GridViewAnswerAdapter;
 import com.eyos.ofir.guessinggame.Adapter.GridViewSuggestAdapter;
+import com.eyos.ofir.guessinggame.SelectedQuestion.SelectQuestion;
 
 import java.util.List;
 
@@ -46,17 +47,36 @@ public class QuestionFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_question, container, false);
         imageView = view.findViewById(R.id.imgLogo);
-        String imgUrl = getArguments().getString("message");
+      //  String imgUrl = getArguments().getString("message");
+        SelectQuestion selectQuestion = getArguments().getParcelable("message");
+        String imgUrl = selectQuestion.getSelectQuestionImgUrl();
+        String correctAnswer = selectQuestion.getSelectQuestionAnswer();
+
         GlideApp.with(getActivity())
                 .load(imgUrl)
                 .into(imageView);
-        initGridView(view);
+        initGridView(view, correctAnswer);
         return view;
     }
 
-    private void initGridView(View view) {
+    private void initGridView(View view, String correctAnswer) {
         gridViewAnswer = view.findViewById(R.id.gridViewAnswer);
         gridViewSuggest = view.findViewById(R.id.gridViewSuggest);
+
+        // setUpList();
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String result = "";
+                for (int i = 0; i < Common.user_submit_answer.length; i++)
+                    result += String.valueOf(Common.user_submit_answer[i]);
+                if(result.equals(correctAnswer)){
+
+                }
+
+            }
+        });
     }
 
 

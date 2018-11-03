@@ -1,5 +1,6 @@
 package com.eyos.ofir.guessinggame.Adapter;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.eyos.ofir.guessinggame.QuestionFragment;
@@ -23,9 +24,12 @@ public class QuestionAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         QuestionFragment questionFragment = new QuestionFragment();
+        SelectQuestion selectQuestion = selectQuestionList.get(position);
         Bundle bundle = new Bundle();
-        String imgUrl = selectQuestionList.get(position).getSelectQuestionImgUrl();
-        bundle.putString("message", imgUrl);
+
+       // String imgUrl = selectQuestionList.get(position).getSelectQuestionImgUrl();
+      //  bundle.putString("message", imgUrl);
+        bundle.putParcelable("df", selectQuestion);
         questionFragment.setArguments(bundle);
         return questionFragment;
     }

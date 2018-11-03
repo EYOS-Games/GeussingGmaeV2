@@ -1,11 +1,18 @@
 package com.eyos.ofir.guessinggame.SelectedQuestion;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "select_question_table")
-public class SelectQuestion {
+public class SelectQuestion implements Parcelable {
 
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "select_question_id")
@@ -30,6 +37,26 @@ public class SelectQuestion {
         this.matchingDifficultyId = matchingDifficultyId;
         this.selectQuestionImgUrl = selectQuestionImgUrl;
     }
+
+    protected SelectQuestion(Parcel in) {
+        selectQuestionId = in.readLong();
+        matchingCategoryId = in.readLong();
+        matchingSubCategoryId = in.readLong();
+        matchingDifficultyId = in.readLong();
+        selectQuestionImgUrl = in.readString();
+    }
+
+    public static final Creator<SelectQuestion> CREATOR = new Creator<SelectQuestion>() {
+        @Override
+        public SelectQuestion createFromParcel(Parcel in) {
+            return new SelectQuestion(in);
+        }
+
+        @Override
+        public SelectQuestion[] newArray(int size) {
+            return new SelectQuestion[size];
+        }
+    };
 
     public long getSelectQuestionId() {
         return selectQuestionId;
@@ -69,5 +96,29 @@ public class SelectQuestion {
 
     public void setSelectQuestionImgUrl(String selectQuestionImgUrl) {
         this.selectQuestionImgUrl = selectQuestionImgUrl;
+    }
+
+    public String getSelectQuestionAnswer(){
+        String answer = "";
+        try {
+            answer =  Paths.get(new URI(selectQuestionImgUrl).getPath()).getFileName().toString().split("\\.")[0];;
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return answer;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(selectQuestionId);
+        dest.writeLong(matchingCategoryId);
+        dest.writeLong(matchingSubCategoryId);
+        dest.writeLong(matchingDifficultyId);
+        dest.writeString(selectQuestionImgUrl);
     }
 }
