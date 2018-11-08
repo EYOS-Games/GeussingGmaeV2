@@ -1,6 +1,8 @@
 package com.eyos.ofir.guessinggame;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,12 +14,16 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eyos.ofir.guessinggame.Adapter.GridViewAnswerAdapter;
 import com.eyos.ofir.guessinggame.Adapter.GridViewSuggestAdapter;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectQuestion;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -29,58 +35,165 @@ public class QuestionFragment extends Fragment {
     private ImageView imageView;
 
     private GridViewAnswerAdapter answerAdapter;
-    private GridViewSuggestAdapter suggestAdapter;
+    public GridViewSuggestAdapter suggestAdapter;
     private Button btnSubmit;
-    private GridView gridViewAnswer, gridViewSuggest;
-    private List<String> suggestSource;
-    private char[] answer;
+    public GridView gridViewAnswer, gridViewSuggest;
+    public List<String> suggestSource;
 
+    private String correctAnswer;
+    public char[] correctAnswerCharArr;
+    private OnButtonClickListener mOnButtonClickListener;
+    private QuestionFragment questionFragment;
+
+    private boolean fragmentResume = false;
+    private boolean fragmentVisible = false;
+    private boolean fragmentOnCreated = false;
+
+    private View view;
 
     public QuestionFragment() {
         // Required empty public constructor
     }
 
+    interface OnButtonClickListener {
+        void onButtonClicked(View view);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        super.onAttach(context);
+        try {
+            mOnButtonClickListener = (OnButtonClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(((Activity) context).getLocalClassName()
+                    + " must implement OnButtonClickListener");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_question, container, false);
+           view = inflater.inflate(R.layout.fragment_question, container, false);
+        if (!fragmentResume && fragmentVisible) {   //only when first time fragment is created
+
+            updateUI(view);
+        }
+
+
+        return view;
+    }
+
+    private void updateUI(View view) {
         imageView = view.findViewById(R.id.imgLogo);
-      //  String imgUrl = getArguments().getString("message");
+        gridViewAnswer = view.findViewById(R.id.gridViewAnswer);
+        gridViewSuggest = view.findViewById(R.id.gridViewSuggest);
+        btnSubmit = view.findViewById(R.id.btnSubmit);
+        questionFragment = this;
+
+        suggestSource = new ArrayList<>();
+
+        //  String imgUrl = getArguments().getString("message");
         SelectQuestion selectQuestion = getArguments().getParcelable("message");
         String imgUrl = selectQuestion.getSelectQuestionImgUrl();
-        String correctAnswer = selectQuestion.getSelectQuestionAnswer();
+        correctAnswer = selectQuestion.getSelectQuestionAnswer();
+        correctAnswerCharArr = correctAnswer.toCharArray();
 
         GlideApp.with(getActivity())
                 .load(imgUrl)
                 .into(imageView);
-        initGridView(view, correctAnswer);
-        return view;
+        initGridView(correctAnswer);
     }
 
-    private void initGridView(View view, String correctAnswer) {
-        gridViewAnswer = view.findViewById(R.id.gridViewAnswer);
-        gridViewSuggest = view.findViewById(R.id.gridViewSuggest);
+    @Override
+    public void setUserVisibleHint(boolean visible) {
+        super.setUserVisibleHint(visible);
+        if (visible && isResumed()) {   // only at fragment screen is resumed
+            fragmentResume = true;
+            fragmentVisible = false;
+            fragmentOnCreated = true;
+            updateUI(view);
+        } else if (visible) {        // only at fragment onCreated
+            fragmentResume = false;
+            fragmentVisible = true;
+            fragmentOnCreated = true;
+        } else if (!visible && fragmentOnCreated) {// only when you go out of fragment screen
+            fragmentVisible = false;
+            fragmentResume = false;
+        }
+    }
 
-        // setUpList();
+    private void initGridView(String correctAnswer) {
+
+
+        setupList();
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String result = "";
                 for (int i = 0; i < Common.user_submit_answer.length; i++)
                     result += String.valueOf(Common.user_submit_answer[i]);
-                if(result.equals(correctAnswer)){
+                if (result.equals(correctAnswer)) {
+                    Toast.makeText(getActivity(), "Finish ! This is " + result, Toast.LENGTH_SHORT).show();
+                    mOnButtonClickListener.onButtonClicked(v);
+                    //Reset
+                    Common.count = 0;
+                    Common.user_submit_answer = new char[correctAnswer.length()];
 
+                    //set adapters
+                    GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(setupNullList(correctAnswerCharArr), getActivity());
+                    gridViewAnswer.setAdapter(answerAdapter);
+                    answerAdapter.notifyDataSetChanged();
+
+                    GridViewSuggestAdapter suggestAdapter = new GridViewSuggestAdapter(getContext(), suggestSource, questionFragment);
+                } else {
+                    Toast.makeText(getActivity(), "Incorrect!!!", Toast.LENGTH_SHORT).show();
                 }
+
 
             }
         });
     }
 
+    private void setupList() {
+        Random random = new Random();
+        //Add Answer character to List
+        suggestSource.clear();
 
-    private char[] setUpNullList() {
+        //char[] answer = correctAnswer.toCharArray();
+        Common.user_submit_answer = new char[correctAnswerCharArr.length];
+        //Add Answer character to List
+        suggestSource.clear();
+        for (char item : correctAnswerCharArr) {
+            //Add logo name to list
+            suggestSource.add(String.valueOf(item));
+        }
+
+        //Random add some character to list
+        for (int i = correctAnswerCharArr.length; i < correctAnswerCharArr.length * 2; i++)
+            suggestSource.add(Common.alphabet_character[random.nextInt(Common.alphabet_character.length)]);
+
+        //Sort random
+        Collections.shuffle(suggestSource);
+
+
+        //Set for GridView
+        answerAdapter = new GridViewAnswerAdapter(setupNullList(correctAnswerCharArr), getActivity());
+        suggestAdapter = new GridViewSuggestAdapter(getActivity(), suggestSource, questionFragment);
+
+        answerAdapter.notifyDataSetChanged();
+        suggestAdapter.notifyDataSetChanged();
+
+        gridViewSuggest.setAdapter(suggestAdapter);
+        gridViewAnswer.setAdapter(answerAdapter);
+    }
+
+
+    private char[] setupNullList(char[] answer) {
+        ;
         char result[] = new char[answer.length];
         for (int i = 0; i < answer.length; i++)
             result[i] = ' ';

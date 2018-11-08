@@ -8,9 +8,9 @@ public class SelectedQuestionProvier {
     public  static void addSelectedQuestionToDB(SelectedQuestionDao selectedQuestionDao){
 
         selectedQuestionDao.Insert(new SelectQuestion(1,1,1,1
-                , "http://www.fubiz.net/wp-content/uploads/2015/09/american-sniper.jpg"));
-        selectedQuestionDao.Insert(new SelectQuestion(2,1,1,1
                 , "http://www.fubiz.net/wp-content/uploads/2015/09/banks.jpg"));
+        selectedQuestionDao.Insert(new SelectQuestion(2,1,1,1
+                , "http://www.fubiz.net/wp-content/uploads/2015/09/american-sniper.jpg"));
         selectedQuestionDao.Insert(new SelectQuestion(3,1,1,1
                 , "http://www.fubiz.net/wp-content/uploads/2015/09/black-swan.jpg"));
         selectedQuestionDao.Insert(new SelectQuestion(4,1,1,1

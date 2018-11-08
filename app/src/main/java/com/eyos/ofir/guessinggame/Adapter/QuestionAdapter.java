@@ -29,7 +29,7 @@ public class QuestionAdapter extends FragmentStatePagerAdapter {
 
        // String imgUrl = selectQuestionList.get(position).getSelectQuestionImgUrl();
       //  bundle.putString("message", imgUrl);
-        bundle.putParcelable("df", selectQuestion);
+        bundle.putParcelable("message", selectQuestion);
         questionFragment.setArguments(bundle);
         return questionFragment;
     }

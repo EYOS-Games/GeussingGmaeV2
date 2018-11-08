@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 
@@ -18,7 +19,7 @@ import com.eyos.ofir.guessinggame.SelectedQuestion.SelectedQuestionViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionActivity extends AppCompatActivity {
+public class QuestionActivity extends AppCompatActivity implements QuestionFragment.OnButtonClickListener {
 
     private ViewPager viewPager;
     private QuestionAdapter questionAdapter;
@@ -48,6 +49,13 @@ public class QuestionActivity extends AppCompatActivity {
 
         ////
 
+
+
+    }
+
+    @Override
+    public void onButtonClicked(View view) {
+        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
 
 
     }
