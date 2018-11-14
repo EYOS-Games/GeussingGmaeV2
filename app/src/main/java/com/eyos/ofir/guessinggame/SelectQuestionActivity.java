@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import timber.log.Timber;
 
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import com.eyos.ofir.guessinggame.SelectedQuestion.SelectedQuestionViewModel;
 import com.eyos.ofir.guessinggame.SubCategory.SubCategory;
 import com.eyos.ofir.guessinggame.Utiliteis.GridSpacingItemDecoration;
 import com.eyos.ofir.guessinggame.Utiliteis.PrepareClass;
+import com.eyos.ofir.guessinggame.Utiliteis.TimerUtilites;
 
 import java.util.List;
 

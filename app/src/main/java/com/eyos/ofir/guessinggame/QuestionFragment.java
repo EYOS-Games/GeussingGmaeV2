@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -34,11 +35,11 @@ public class QuestionFragment extends Fragment {
 
     private ImageView imageView;
 
-    private GridViewAnswerAdapter answerAdapter;
+    public GridViewAnswerAdapter answerAdapter;
     public GridViewSuggestAdapter suggestAdapter;
     private Button btnSubmit;
     public GridView gridViewAnswer, gridViewSuggest;
-    public List<String> suggestSource;
+    public List<String> suggestSource, answerSource;
 
     private String correctAnswer;
     public char[] correctAnswerCharArr;
@@ -76,23 +77,18 @@ public class QuestionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
            view = inflater.inflate(R.layout.fragment_question, container, false);
-        if (!fragmentResume && fragmentVisible) {   //only when first time fragment is created
+
 
             updateUI(view);
-        }
+      //  }
 
 
         return view;
     }
 
-    private void updateUI(View view) {
-        imageView = view.findViewById(R.id.imgLogo);
-        gridViewAnswer = view.findViewById(R.id.gridViewAnswer);
-        gridViewSuggest = view.findViewById(R.id.gridViewSuggest);
-        btnSubmit = view.findViewById(R.id.btnSubmit);
-        questionFragment = this;
-
-        suggestSource = new ArrayList<>();
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         //  String imgUrl = getArguments().getString("message");
         SelectQuestion selectQuestion = getArguments().getParcelable("message");
@@ -103,7 +99,20 @@ public class QuestionFragment extends Fragment {
         GlideApp.with(getActivity())
                 .load(imgUrl)
                 .into(imageView);
-        initGridView(correctAnswer);
+         if (!fragmentResume && fragmentVisible) {   //only when first time fragment is created
+             initGridView(correctAnswer);
+         }
+    }
+
+    private void updateUI(View view) {
+        imageView = view.findViewById(R.id.imgLogo);
+        gridViewAnswer = view.findViewById(R.id.gridViewAnswer);
+        gridViewSuggest = view.findViewById(R.id.gridViewSuggest);
+        btnSubmit = view.findViewById(R.id.btnSubmit);
+        questionFragment = this;
+        suggestSource = new ArrayList<>();
+
+
     }
 
     @Override

@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
+import butterknife.ButterKnife;
+import timber.log.Timber;
 
 import android.os.Bundle;
 import android.view.View;
@@ -15,24 +17,31 @@ import com.eyos.ofir.guessinggame.Adapter.GridViewSuggestAdapter;
 import com.eyos.ofir.guessinggame.Adapter.QuestionAdapter;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectQuestion;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectedQuestionViewModel;
+import com.eyos.ofir.guessinggame.Utiliteis.TimerUtilites;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionActivity extends AppCompatActivity implements QuestionFragment.OnButtonClickListener {
 
+
+
     private ViewPager viewPager;
+
     private QuestionAdapter questionAdapter;
     private SelectedQuestionViewModel selectedQuestionViewModel;
-
-
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+
+        TimerUtilites.initTimer(); //TODO: MOVE TO MAIN ACTIVITY
+
+        Timber.d("test test");
+
+
 
         viewPager = findViewById(R.id.view_pager_question);
         questionAdapter = new QuestionAdapter(getSupportFragmentManager());
