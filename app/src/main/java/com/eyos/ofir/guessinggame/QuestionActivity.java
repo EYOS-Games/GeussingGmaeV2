@@ -44,6 +44,7 @@ public class QuestionActivity extends AppCompatActivity implements QuestionFragm
 
 
         viewPager = findViewById(R.id.view_pager_question);
+
         questionAdapter = new QuestionAdapter(getSupportFragmentManager());
         viewPager.setAdapter(questionAdapter);
 

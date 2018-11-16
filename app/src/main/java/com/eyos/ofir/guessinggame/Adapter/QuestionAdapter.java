@@ -2,6 +2,8 @@ package com.eyos.ofir.guessinggame.Adapter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.view.ViewGroup;
 
 import com.eyos.ofir.guessinggame.QuestionFragment;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectQuestion;
@@ -9,6 +11,7 @@ import com.eyos.ofir.guessinggame.SelectedQuestion.SelectQuestion;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -27,8 +30,6 @@ public class QuestionAdapter extends FragmentStatePagerAdapter {
         SelectQuestion selectQuestion = selectQuestionList.get(position);
         Bundle bundle = new Bundle();
 
-       // String imgUrl = selectQuestionList.get(position).getSelectQuestionImgUrl();
-      //  bundle.putString("message", imgUrl);
         bundle.putParcelable("message", selectQuestion);
         questionFragment.setArguments(bundle);
         return questionFragment;
@@ -43,4 +44,8 @@ public class QuestionAdapter extends FragmentStatePagerAdapter {
         this.selectQuestionList = selectQuestions;
         notifyDataSetChanged();
     }
+
+
+
+
 }

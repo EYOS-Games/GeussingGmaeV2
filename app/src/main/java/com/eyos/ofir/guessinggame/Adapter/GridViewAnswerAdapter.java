@@ -14,7 +14,7 @@ public class GridViewAnswerAdapter extends BaseAdapter {
     private char[] answerCharacter;
     private Context context;
 
-    public GridViewAnswerAdapter(char[] answerCharacter, Context context) {
+    public GridViewAnswerAdapter(Context context,  char[] answerCharacter) {
         this.answerCharacter = answerCharacter;
         this.context = context;
     }

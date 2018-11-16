@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.eyos.ofir.guessinggame.Common;
 import com.eyos.ofir.guessinggame.QuestionFragment;
@@ -19,11 +20,14 @@ public class GridViewSuggestAdapter extends BaseAdapter {
     private Context context;
     private QuestionFragment questionFragment;
 
+    private static boolean updateUI;
+
 
     public GridViewSuggestAdapter(Context context, List<String> suggestSource, QuestionFragment questionFragment) {
         this.suggestSource = suggestSource;
         this.context = context;
         this.questionFragment = questionFragment;
+        updateUI = false;
 
     }
 
@@ -58,21 +62,27 @@ public class GridViewSuggestAdapter extends BaseAdapter {
                     char charAt = suggestSource.get(position).charAt(0); // Get char
 
                     for (int i = 0; i < questionFragment.correctAnswerCharArr.length; i++) {
-                        if (charAt == questionFragment.correctAnswerCharArr[i])
+                        if (Common.user_submit_answer[i] == 0) { //if there's an empty space
                             Common.user_submit_answer[i] = charAt;
+                            updateUI = true;
+                            break;
+                        }
+
                     }
 
+                    if (updateUI) {
+                        //Update UI
+                        GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(context, Common.user_submit_answer);
+                        questionFragment.gridViewAnswer.setAdapter(answerAdapter);
+                        answerAdapter.notifyDataSetChanged();
 
-                    //Update UI
-                    GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(Common.user_submit_answer, context);
-                    questionFragment.gridViewAnswer.setAdapter(answerAdapter);
-                    answerAdapter.notifyDataSetChanged();
-
-                    //Remove from suggest source
-                    questionFragment.suggestSource.set(position, "null");
-                    questionFragment.suggestAdapter = new GridViewSuggestAdapter(context, questionFragment.suggestSource, questionFragment);
-                    questionFragment.gridViewSuggest.setAdapter(questionFragment.suggestAdapter);
-                    questionFragment.suggestAdapter.notifyDataSetChanged();
+                        //Remove from suggest source
+                        questionFragment.suggestSource.set(position, "");
+                        questionFragment.suggestAdapter = new GridViewSuggestAdapter(context, questionFragment.suggestSource, questionFragment);
+                        questionFragment.gridViewSuggest.setAdapter(questionFragment.suggestAdapter);
+                        questionFragment.suggestAdapter.notifyDataSetChanged();
+                    } else
+                        Toast.makeText(context, "cant add to answer, please remove first", Toast.LENGTH_SHORT).show();
                 }
             });
         } else

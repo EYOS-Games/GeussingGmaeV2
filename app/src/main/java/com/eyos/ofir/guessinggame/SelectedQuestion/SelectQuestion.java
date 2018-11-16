@@ -12,7 +12,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "select_question_table")
-public class SelectQuestion implements Parcelable {
+public class  SelectQuestion implements Parcelable {
 
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "select_question_id")

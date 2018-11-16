@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,9 +87,16 @@ public class QuestionFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+
+
+
+    private void updateUI(View view) {
+        imageView = view.findViewById(R.id.imgLogo);
+        gridViewAnswer = view.findViewById(R.id.gridViewAnswer);
+        gridViewSuggest = view.findViewById(R.id.gridViewSuggest);
+        btnSubmit = view.findViewById(R.id.btnSubmit);
+        questionFragment = this;
+        suggestSource = new ArrayList<>();
 
         //  String imgUrl = getArguments().getString("message");
         SelectQuestion selectQuestion = getArguments().getParcelable("message");
@@ -99,21 +107,14 @@ public class QuestionFragment extends Fragment {
         GlideApp.with(getActivity())
                 .load(imgUrl)
                 .into(imageView);
-         if (!fragmentResume && fragmentVisible) {   //only when first time fragment is created
-             initGridView(correctAnswer);
-         }
-    }
 
-    private void updateUI(View view) {
-        imageView = view.findViewById(R.id.imgLogo);
-        gridViewAnswer = view.findViewById(R.id.gridViewAnswer);
-        gridViewSuggest = view.findViewById(R.id.gridViewSuggest);
-        btnSubmit = view.findViewById(R.id.btnSubmit);
-        questionFragment = this;
-        suggestSource = new ArrayList<>();
-
+        if ((!fragmentResume && fragmentVisible )||  fragmentResume) {   //only when first time fragment is created
+            initGridView(correctAnswer);
+        }
 
     }
+
+
 
     @Override
     public void setUserVisibleHint(boolean visible) {
@@ -132,6 +133,8 @@ public class QuestionFragment extends Fragment {
             fragmentResume = false;
         }
     }
+
+
 
     private void initGridView(String correctAnswer) {
 
@@ -153,11 +156,14 @@ public class QuestionFragment extends Fragment {
                     Common.user_submit_answer = new char[correctAnswer.length()];
 
                     //set adapters
-                    GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(setupNullList(correctAnswerCharArr), getActivity());
+                    GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(getActivity(),setupNullList(correctAnswerCharArr));
                     gridViewAnswer.setAdapter(answerAdapter);
                     answerAdapter.notifyDataSetChanged();
-
                     GridViewSuggestAdapter suggestAdapter = new GridViewSuggestAdapter(getContext(), suggestSource, questionFragment);
+
+                    //save to instance
+
+
                 } else {
                     Toast.makeText(getActivity(), "Incorrect!!!", Toast.LENGTH_SHORT).show();
                 }
@@ -190,7 +196,7 @@ public class QuestionFragment extends Fragment {
 
 
         //Set for GridView
-        answerAdapter = new GridViewAnswerAdapter(setupNullList(correctAnswerCharArr), getActivity());
+        answerAdapter = new GridViewAnswerAdapter(getActivity(), setupNullList(correctAnswerCharArr));
         suggestAdapter = new GridViewSuggestAdapter(getActivity(), suggestSource, questionFragment);
 
         answerAdapter.notifyDataSetChanged();
