@@ -11,7 +11,7 @@ import timber.log.Timber;
 
 public class TimerUtilites  {
 
-    public static final int MAX_LOG_LENGHT = 4000;
+    public static final int MAX_LOG_LENGTH = 4000;
 
     public static void initTimer() {
         if (BuildConfig.DEBUG) {//DEBUG TREE
@@ -36,21 +36,24 @@ public class TimerUtilites  {
         @Override
         protected void log(int priority, String tag, String message, Throwable t) {
             if (isLoggable(tag, priority)) {
-                if (message.length() < MAX_LOG_LENGHT)
+                if (message.length() < MAX_LOG_LENGTH) {
                     if (priority == Log.ASSERT) {
-                        Timber.wtf(tag, message);
+                        Log.wtf(tag, message);
                     } else {
                         Log.println(priority, tag, message);
                     }
+                    return;
+                }
 
-                for (int i = 0 , length = message.length(); i < length ; i++){
+                for (int i = 0, length = message.length(); i < length; i++) {
                     int newLine = message.indexOf('\n', i);
+                    newLine = newLine != -1 ? newLine : length;
                     do{
-                        int end = Math.min(newLine, i + MAX_LOG_LENGHT);
-                        String part = message.substring(i , end);
-                        if(priority == Log.ASSERT){
-                            Timber.wtf(tag, part);
-                        }else{
+                        int end = Math.min(newLine, i + MAX_LOG_LENGTH);
+                        String part = message.substring(i, end);
+                        if (priority == Log.ASSERT) {
+                            Log.wtf(tag, part);
+                        } else {
                             Log.println(priority, tag, part);
                         }
                         i = end;
