@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import timber.log.Timber;
 
 public class QuestionAdapter extends FragmentStatePagerAdapter {
 
@@ -42,6 +43,7 @@ public class QuestionAdapter extends FragmentStatePagerAdapter {
 
     public void setSelectQuestions(List<SelectQuestion> selectQuestions) {
         this.selectQuestionList = selectQuestions;
+        Timber.d("QuestionAdapter setSelectQuestions called with question amount "  + selectQuestionList.size());
         notifyDataSetChanged();
     }
 

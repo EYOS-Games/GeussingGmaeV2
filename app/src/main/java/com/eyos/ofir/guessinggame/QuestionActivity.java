@@ -39,7 +39,7 @@ public class QuestionActivity extends AppCompatActivity implements GridViewSugge
 
         TimerUtilites.initTimer(); //TODO: MOVE TO MAIN ACTIVITY
 
-        Timber.d("test test");
+        Timber.d("QuestionActivity started");
 
 
 
@@ -53,7 +53,9 @@ public class QuestionActivity extends AppCompatActivity implements GridViewSugge
         selectedQuestionViewModel.getSelectedQuestions(1, 1, 1).observe(this, new Observer<List<SelectQuestion>>() {
             @Override
             public void onChanged(List<SelectQuestion> selectQuestions) {
+                Timber.d("QuestionActivity onChanged called");
                 questionAdapter.setSelectQuestions(selectQuestions);
+
             }
         });
 
