@@ -16,20 +16,30 @@ import java.util.List;
 
 public class GridViewSuggestAdapter extends BaseAdapter {
 
-  //  private List<String> suggestSource;
+    //  private List<String> suggestSource;
     private Context context;
     private QuestionFragment questionFragment;
+    private OnButtonClickListener mOnButtonClickListener;
 
-    private static boolean updateUI;
+    private static boolean updateUI, checkForCorrectAnswer;
+    private String correctAnswer;
 
 
     public GridViewSuggestAdapter(Context context, List<String> suggestSource, QuestionFragment questionFragment) {
-      //  this.suggestSource = suggestSource;
+        //  this.suggestSource = suggestSource;
         this.context = context;
         this.questionFragment = questionFragment;
         updateUI = false;
+        checkForCorrectAnswer = true;
+        correctAnswer = questionFragment.correctAnswer;
+        mOnButtonClickListener = (OnButtonClickListener) context;
 
     }
+
+    public interface OnButtonClickListener {
+        void onButtonClicked(View view);
+    }
+
 
     @Override
     public int getCount() {
@@ -65,11 +75,11 @@ public class GridViewSuggestAdapter extends BaseAdapter {
                         if (Common.user_submit_answer[i] == 0) { //if there's an empty space
                             Common.user_submit_answer[i] = charAt;
                             updateUI = true;
+                            if (i == questionFragment.correctAnswerCharArr.length - 1)
+                                checkForCorrectAnswer = true;
                             break;
                         }
-
                     }
-
                     if (updateUI) {
                         //Update UI
                         GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(context, Common.user_submit_answer, questionFragment);
@@ -81,8 +91,38 @@ public class GridViewSuggestAdapter extends BaseAdapter {
                         questionFragment.suggestAdapter = new GridViewSuggestAdapter(context, questionFragment.suggestSource, questionFragment);
                         questionFragment.gridViewSuggest.setAdapter(questionFragment.suggestAdapter);
                         questionFragment.suggestAdapter.notifyDataSetChanged();
-                    } else
+                    } else {
                         Toast.makeText(context, "cant add to answer, please remove first", Toast.LENGTH_SHORT).show();
+                    }
+
+                    for (int i = 0; i < questionFragment.correctAnswerCharArr.length; i++) {
+                        if (Common.user_submit_answer[i] == 0) { //if there's an empty space
+                            checkForCorrectAnswer = false;
+                            break;
+                        }
+                    }
+
+                    if (checkForCorrectAnswer) {
+                        String result = "";
+                        for (int i = 0; i < Common.user_submit_answer.length; i++)
+                            result += String.valueOf(Common.user_submit_answer[i]);
+                        if (result.equals(correctAnswer)) {
+                            Toast.makeText(context, "Finish ! This is " + result, Toast.LENGTH_SHORT).show();
+
+                            mOnButtonClickListener.onButtonClicked(v);
+                            //Reset
+                            Common.count = 0;
+                            Common.user_submit_answer = new char[correctAnswer.length()];
+
+                            GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(context, questionFragment.setupNullList(correctAnswer.toCharArray()), questionFragment);
+                            questionFragment.gridViewAnswer.setAdapter(answerAdapter);
+                            answerAdapter.notifyDataSetChanged();
+                            GridViewSuggestAdapter suggestAdapter = new GridViewSuggestAdapter(context, questionFragment.suggestSource, questionFragment);
+                        } else {
+                            Toast.makeText(context, "Incorrect!!!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
                 }
             });
         } else

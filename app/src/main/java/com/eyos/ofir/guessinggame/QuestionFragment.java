@@ -38,13 +38,13 @@ public class QuestionFragment extends Fragment {
 
     public GridViewAnswerAdapter answerAdapter;
     public GridViewSuggestAdapter suggestAdapter;
-    private Button btnSubmit;
+
     public GridView gridViewAnswer, gridViewSuggest;
     public List<String> suggestSource, answerSource;
 
-    private String correctAnswer;
+    public String correctAnswer;
     public char[] correctAnswerCharArr;
-    private OnButtonClickListener mOnButtonClickListener;
+    //  private OnButtonClickListener mOnButtonClickListener;
     private QuestionFragment questionFragment;
 
     private boolean fragmentResume = false;
@@ -57,44 +57,23 @@ public class QuestionFragment extends Fragment {
         // Required empty public constructor
     }
 
-    interface OnButtonClickListener {
-        void onButtonClicked(View view);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        super.onAttach(context);
-        try {
-            mOnButtonClickListener = (OnButtonClickListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(((Activity) context).getLocalClassName()
-                    + " must implement OnButtonClickListener");
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-           view = inflater.inflate(R.layout.fragment_question, container, false);
-
-
-            updateUI(view);
-      //  }
-
+        view = inflater.inflate(R.layout.fragment_question, container, false);
+        updateUI(view);
 
         return view;
     }
-
-
 
 
     private void updateUI(View view) {
         imageView = view.findViewById(R.id.imgLogo);
         gridViewAnswer = view.findViewById(R.id.gridViewAnswer);
         gridViewSuggest = view.findViewById(R.id.gridViewSuggest);
-        btnSubmit = view.findViewById(R.id.btnSubmit);
+
         questionFragment = this;
         suggestSource = new ArrayList<>();
 
@@ -108,12 +87,12 @@ public class QuestionFragment extends Fragment {
                 .load(imgUrl)
                 .into(imageView);
 
-        if ((!fragmentResume && fragmentVisible )||  fragmentResume) {   //only when first time fragment is created
+        //TODO: DO NOT RESET IF DONE
+        if ((!fragmentResume && fragmentVisible) || fragmentResume) {   //only when first time fragment is created
             initGridView(correctAnswer);
         }
 
     }
-
 
 
     @Override
@@ -135,13 +114,12 @@ public class QuestionFragment extends Fragment {
     }
 
 
-
     private void initGridView(String correctAnswer) {
 
 
         setupList();
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+      /*  btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -150,7 +128,7 @@ public class QuestionFragment extends Fragment {
                     result += String.valueOf(Common.user_submit_answer[i]);
                 if (result.equals(correctAnswer)) {
                     Toast.makeText(getActivity(), "Finish ! This is " + result, Toast.LENGTH_SHORT).show();
-                    mOnButtonClickListener.onButtonClicked(v);
+                  //  mOnButtonClickListener.onButtonClicked(v);
                     //Reset
                     Common.count = 0;
                     Common.user_submit_answer = new char[correctAnswer.length()];
@@ -170,7 +148,7 @@ public class QuestionFragment extends Fragment {
 
 
             }
-        });
+        }); */
     }
 
     private void setupList() {
@@ -207,8 +185,8 @@ public class QuestionFragment extends Fragment {
     }
 
 
-    private char[] setupNullList(char[] answer) {
-        ;
+    public char[] setupNullList(char[] answer) {
+
         char result[] = new char[answer.length];
         for (int i = 0; i < answer.length; i++)
             result[i] = ' ';

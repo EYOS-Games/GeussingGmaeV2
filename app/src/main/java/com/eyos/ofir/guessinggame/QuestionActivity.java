@@ -22,7 +22,7 @@ import com.eyos.ofir.guessinggame.Utiliteis.TimerUtilites;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionActivity extends AppCompatActivity implements QuestionFragment.OnButtonClickListener {
+public class QuestionActivity extends AppCompatActivity implements GridViewSuggestAdapter.OnButtonClickListener {
 
 
 
@@ -66,7 +66,10 @@ public class QuestionActivity extends AppCompatActivity implements QuestionFragm
     @Override
     public void onButtonClicked(View view) {
         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-
-
     }
+
+//    @Override
+//    public void onButtonClicked(View view) {
+//        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+//    }
 }

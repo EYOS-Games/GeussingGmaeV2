@@ -13,6 +13,7 @@ import androidx.lifecycle.LiveData;
 public class SelectedQuestionViewModel extends AndroidViewModel {
 
     private MainRepo mainRepo;
+
     public SelectedQuestionViewModel(@NonNull Application application) {
         super(application);
 
@@ -20,6 +21,6 @@ public class SelectedQuestionViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<SelectQuestion>> getSelectedQuestions(long matchingCategoryId, long matchingSubCategoryId, long matchingDifficultyId) {
-      return   mainRepo.getSelectedQuestions(matchingCategoryId,matchingSubCategoryId, matchingDifficultyId);
+        return mainRepo.getSelectedQuestions(matchingCategoryId, matchingSubCategoryId, matchingDifficultyId);
     }
 }
