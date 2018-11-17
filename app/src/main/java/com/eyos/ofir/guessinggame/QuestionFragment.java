@@ -156,7 +156,7 @@ public class QuestionFragment extends Fragment {
                     Common.user_submit_answer = new char[correctAnswer.length()];
 
                     //set adapters
-                    GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(getActivity(),setupNullList(correctAnswerCharArr));
+                    GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(getActivity(),setupNullList(correctAnswerCharArr), questionFragment);
                     gridViewAnswer.setAdapter(answerAdapter);
                     answerAdapter.notifyDataSetChanged();
                     GridViewSuggestAdapter suggestAdapter = new GridViewSuggestAdapter(getContext(), suggestSource, questionFragment);
@@ -196,7 +196,7 @@ public class QuestionFragment extends Fragment {
 
 
         //Set for GridView
-        answerAdapter = new GridViewAnswerAdapter(getActivity(), setupNullList(correctAnswerCharArr));
+        answerAdapter = new GridViewAnswerAdapter(getActivity(), setupNullList(correctAnswerCharArr), questionFragment);
         suggestAdapter = new GridViewSuggestAdapter(getActivity(), suggestSource, questionFragment);
 
         answerAdapter.notifyDataSetChanged();

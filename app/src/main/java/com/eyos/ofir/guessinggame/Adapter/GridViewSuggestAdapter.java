@@ -16,7 +16,7 @@ import java.util.List;
 
 public class GridViewSuggestAdapter extends BaseAdapter {
 
-    private List<String> suggestSource;
+  //  private List<String> suggestSource;
     private Context context;
     private QuestionFragment questionFragment;
 
@@ -24,7 +24,7 @@ public class GridViewSuggestAdapter extends BaseAdapter {
 
 
     public GridViewSuggestAdapter(Context context, List<String> suggestSource, QuestionFragment questionFragment) {
-        this.suggestSource = suggestSource;
+      //  this.suggestSource = suggestSource;
         this.context = context;
         this.questionFragment = questionFragment;
         updateUI = false;
@@ -33,12 +33,12 @@ public class GridViewSuggestAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return suggestSource.size();
+        return questionFragment.suggestSource.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return suggestSource.get(position);
+        return questionFragment.suggestSource.get(position);
     }
 
     @Override
@@ -55,11 +55,11 @@ public class GridViewSuggestAdapter extends BaseAdapter {
             button.setPadding(8, 8, 8, 8);
             button.setBackgroundColor(Color.DKGRAY);
             button.setTextColor(Color.YELLOW);
-            button.setText(suggestSource.get(position));
+            button.setText(questionFragment.suggestSource.get(position));
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    char charAt = suggestSource.get(position).charAt(0); // Get char
+                    char charAt = questionFragment.suggestSource.get(position).charAt(0); // Get char
 
                     for (int i = 0; i < questionFragment.correctAnswerCharArr.length; i++) {
                         if (Common.user_submit_answer[i] == 0) { //if there's an empty space
@@ -72,7 +72,7 @@ public class GridViewSuggestAdapter extends BaseAdapter {
 
                     if (updateUI) {
                         //Update UI
-                        GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(context, Common.user_submit_answer);
+                        GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(context, Common.user_submit_answer, questionFragment);
                         questionFragment.gridViewAnswer.setAdapter(answerAdapter);
                         answerAdapter.notifyDataSetChanged();
 
