@@ -1,4 +1,4 @@
-package com.eyos.ofir.guessinggame;
+package com.eyos.ofir.guessinggame.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.eyos.ofir.guessinggame.Adapter.Adapter;
+import com.eyos.ofir.guessinggame.Common;
 import com.eyos.ofir.guessinggame.Difficulty.Difficulty;
 import com.eyos.ofir.guessinggame.Difficulty.DifficultyViewModel;
+import com.eyos.ofir.guessinggame.R;
 import com.eyos.ofir.guessinggame.SubCategory.SubCategory;
 import com.eyos.ofir.guessinggame.Utiliteis.GridSpacingItemDecoration;
 import com.eyos.ofir.guessinggame.Utiliteis.PrepareClass;

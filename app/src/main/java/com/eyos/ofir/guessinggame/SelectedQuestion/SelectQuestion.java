@@ -30,6 +30,9 @@ public class  SelectQuestion implements Parcelable {
     @ColumnInfo(name = "select_question_image_url")
     private String selectQuestionImgUrl;
 
+    @ColumnInfo(name = "is_question_done")
+    private boolean isQuestionDone;
+
     public SelectQuestion(long selectQuestionId, long matchingCategoryId, long matchingSubCategoryId, long matchingDifficultyId, String selectQuestionImgUrl) {
         this.selectQuestionId = selectQuestionId;
         this.matchingCategoryId = matchingCategoryId;
@@ -44,6 +47,22 @@ public class  SelectQuestion implements Parcelable {
         matchingSubCategoryId = in.readLong();
         matchingDifficultyId = in.readLong();
         selectQuestionImgUrl = in.readString();
+        isQuestionDone = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(selectQuestionId);
+        dest.writeLong(matchingCategoryId);
+        dest.writeLong(matchingSubCategoryId);
+        dest.writeLong(matchingDifficultyId);
+        dest.writeString(selectQuestionImgUrl);
+        dest.writeByte((byte) (isQuestionDone ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<SelectQuestion> CREATOR = new Creator<SelectQuestion>() {
@@ -98,6 +117,13 @@ public class  SelectQuestion implements Parcelable {
         this.selectQuestionImgUrl = selectQuestionImgUrl;
     }
 
+    public boolean isQuestionDone() {
+        return isQuestionDone;
+    }
+
+    public void setQuestionDone(boolean questionDone) {
+        isQuestionDone = questionDone;
+    }
     public String getSelectQuestionAnswer(){
         String answer = "";
         try {
@@ -107,18 +133,5 @@ public class  SelectQuestion implements Parcelable {
         }
         return answer;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(selectQuestionId);
-        dest.writeLong(matchingCategoryId);
-        dest.writeLong(matchingSubCategoryId);
-        dest.writeLong(matchingDifficultyId);
-        dest.writeString(selectQuestionImgUrl);
-    }
 }
+

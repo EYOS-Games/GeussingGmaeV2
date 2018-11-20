@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".QuestionActivity"
+            android:name=".Activitys.QuestionActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SubCategoryActivity" />
-        <activity android:name=".DifficultyActivity" />
-        <activity android:name=".SelectQuestionActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".Activitys.SubCategoryActivity" />
+        <activity android:name=".Activitys.DifficultyActivity" />
+        <activity android:name=".Activitys.SelectQuestionActivity" />
+        <activity android:name=".Activitys.MainActivity"></activity>
     </application>
 
 </manifest>

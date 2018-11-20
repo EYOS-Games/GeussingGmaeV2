@@ -16,6 +16,11 @@ public interface SelectedQuestionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void Insert(SelectQuestion selectQuestion);
 
-    @Query("SELECT * FROM select_question_table WHERE matching_category_id = :matchingCategoryId AND matching_sub_category_id = :matchingSubCategoryId AND  matching_difficulty_id = :matchingDifficultyId")
+    @Query("SELECT * FROM select_question_table " +
+            "WHERE matching_category_id = :matchingCategoryId AND matching_sub_category_id = :matchingSubCategoryId AND  matching_difficulty_id = :matchingDifficultyId")
     LiveData<List<SelectQuestion>> GetMatchingSelectedQuestions(long matchingCategoryId, long matchingSubCategoryId, long matchingDifficultyId);
+
+    @Query("UPDATE select_question_table SET is_question_done = 1 " +
+            "WHERE select_question_id = :selectQuestionId")
+    void setQuestionDone(long selectQuestionId);
 }

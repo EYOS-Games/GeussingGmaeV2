@@ -47,6 +47,12 @@ public class MainRepo {
         new populateDBAsyncTask(categoryDao, subCategoryDao, difficultyDao, selectedQuestionDao).execute();
     }
 
+
+    public void updateQuestionDone(long questionId){
+        new updateQuestionDoneAsyncTask(selectedQuestionDao).execute(questionId);
+    }
+
+
     public LiveData<List<SelectQuestion>> getSelectedQuestions(long matchingCategoryId, long matchingSubCategoryId, long matchingDifficultyId) {
         return  selectedQuestionDao.GetMatchingSelectedQuestions(matchingCategoryId, matchingSubCategoryId,matchingDifficultyId);
     }
@@ -70,6 +76,22 @@ public class MainRepo {
 
     public void insertCategory(Category category) {
         new InsertCategoryAsyncTask(categoryDao).execute(category);
+    }
+
+    private static class updateQuestionDoneAsyncTask extends  AsyncTask<Long, Void, Void>{
+
+        private SelectedQuestionDao selectedQuestionDao;
+
+        public updateQuestionDoneAsyncTask(SelectedQuestionDao selectedQuestionDao) {
+            this.selectedQuestionDao = selectedQuestionDao;
+        }
+
+        @Override
+        protected Void doInBackground(Long... longs) {
+            long questionId = longs[0];
+            selectedQuestionDao.setQuestionDone(questionId);
+            return null;
+        }
     }
 
 

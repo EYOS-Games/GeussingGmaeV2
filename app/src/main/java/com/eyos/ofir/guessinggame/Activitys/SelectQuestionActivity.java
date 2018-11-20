@@ -1,4 +1,4 @@
-package com.eyos.ofir.guessinggame;
+package com.eyos.ofir.guessinggame.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -7,12 +7,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.eyos.ofir.guessinggame.Adapter.Adapter;
+import com.eyos.ofir.guessinggame.Common;
 import com.eyos.ofir.guessinggame.Difficulty.Difficulty;
+import com.eyos.ofir.guessinggame.R;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectQuestion;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectedQuestionViewModel;
+import com.eyos.ofir.guessinggame.Session;
 import com.eyos.ofir.guessinggame.Utiliteis.GridSpacingItemDecoration;
 import com.eyos.ofir.guessinggame.Utiliteis.PrepareClass;
 
@@ -24,6 +28,7 @@ public class SelectQuestionActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private Adapter mAdapter;
     private Session session;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

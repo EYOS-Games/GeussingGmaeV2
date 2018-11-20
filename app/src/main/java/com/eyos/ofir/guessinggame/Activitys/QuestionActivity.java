@@ -1,6 +1,9 @@
-package com.eyos.ofir.guessinggame;
+package com.eyos.ofir.guessinggame.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
@@ -15,6 +18,8 @@ import android.widget.GridView;
 import com.eyos.ofir.guessinggame.Adapter.GridViewAnswerAdapter;
 import com.eyos.ofir.guessinggame.Adapter.GridViewSuggestAdapter;
 import com.eyos.ofir.guessinggame.Adapter.QuestionAdapter;
+import com.eyos.ofir.guessinggame.Models;
+import com.eyos.ofir.guessinggame.R;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectQuestion;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectedQuestionViewModel;
 import com.eyos.ofir.guessinggame.Utiliteis.TimerUtilites;
@@ -28,8 +33,9 @@ public class QuestionActivity extends AppCompatActivity implements GridViewSugge
 
     private ViewPager viewPager;
 
-    private QuestionAdapter questionAdapter;
+    public static QuestionAdapter questionAdapter;
     private SelectedQuestionViewModel selectedQuestionViewModel;
+    LifecycleOwner lifecycleOwner = this;
 
 
     @Override
@@ -48,9 +54,11 @@ public class QuestionActivity extends AppCompatActivity implements GridViewSugge
         questionAdapter = new QuestionAdapter(getSupportFragmentManager());
         viewPager.setAdapter(questionAdapter);
 
-        selectedQuestionViewModel = ViewModelProviders.of(this).get(SelectedQuestionViewModel.class);
+        Models.setSelectedQuestionViewModel(ViewModelProviders.of(this).get(SelectedQuestionViewModel.class));
 
-        selectedQuestionViewModel.getSelectedQuestions(1, 1, 1).observe(this, new Observer<List<SelectQuestion>>() {
+        selectedQuestionViewModel = Models.getSelectedQuestionViewModel();//ViewModelProviders.of(this).get(SelectedQuestionViewModel.class);
+
+        selectedQuestionViewModel.getSelectedQuestions(1, 1, 1).observe(lifecycleOwner, new Observer<List<SelectQuestion>>() {
             @Override
             public void onChanged(List<SelectQuestion> selectQuestions) {
                 Timber.d("QuestionActivity onChanged called");
@@ -58,11 +66,6 @@ public class QuestionActivity extends AppCompatActivity implements GridViewSugge
 
             }
         });
-
-        ////
-
-
-
     }
 
     @Override

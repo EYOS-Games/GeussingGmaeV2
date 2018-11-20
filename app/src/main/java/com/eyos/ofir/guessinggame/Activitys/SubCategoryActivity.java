@@ -1,4 +1,4 @@
-package com.eyos.ofir.guessinggame;
+package com.eyos.ofir.guessinggame.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -11,6 +11,8 @@ import android.os.Bundle;
 
 import com.eyos.ofir.guessinggame.Adapter.Adapter;
 import com.eyos.ofir.guessinggame.Category.Category;
+import com.eyos.ofir.guessinggame.Common;
+import com.eyos.ofir.guessinggame.R;
 import com.eyos.ofir.guessinggame.SubCategory.SubCategory;
 import com.eyos.ofir.guessinggame.SubCategory.SubCategoryViewModel;
 import com.eyos.ofir.guessinggame.Utiliteis.GridSpacingItemDecoration;

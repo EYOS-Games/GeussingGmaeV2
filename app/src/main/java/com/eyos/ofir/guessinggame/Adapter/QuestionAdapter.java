@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.ViewGroup;
 
+import com.eyos.ofir.guessinggame.Common;
 import com.eyos.ofir.guessinggame.QuestionFragment;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectQuestion;
 
@@ -31,7 +32,7 @@ public class QuestionAdapter extends FragmentStatePagerAdapter {
         SelectQuestion selectQuestion = selectQuestionList.get(position);
         Bundle bundle = new Bundle();
 
-        bundle.putParcelable("message", selectQuestion);
+        bundle.putParcelable(Common.SELECTED_SELECTED_QUESTION_KEY, selectQuestion);
         questionFragment.setArguments(bundle);
         return questionFragment;
     }

@@ -1,8 +1,10 @@
-package com.eyos.ofir.guessinggame;
+package com.eyos.ofir.guessinggame.Activitys;
 
 
 import android.os.Bundle;
 
+import com.eyos.ofir.guessinggame.Common;
+import com.eyos.ofir.guessinggame.R;
 import com.eyos.ofir.guessinggame.Utiliteis.GridSpacingItemDecoration;
 import com.eyos.ofir.guessinggame.Utiliteis.PrepareClass;
 import com.eyos.ofir.guessinggame.Category.Category;

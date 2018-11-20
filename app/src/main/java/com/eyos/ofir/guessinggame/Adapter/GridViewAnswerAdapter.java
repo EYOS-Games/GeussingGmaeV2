@@ -21,7 +21,7 @@ public class GridViewAnswerAdapter extends BaseAdapter {
     private  boolean updateUI;
     private int indexToRestore;
 
-    public GridViewAnswerAdapter(Context context,  char[] answerCharacter, QuestionFragment questionFragment) {
+    public GridViewAnswerAdapter(Context context, QuestionFragment questionFragment, char[] answerCharacter) {
         this.answerCharacter = answerCharacter;
         this.context = context;
         this.questionFragment = questionFragment;
@@ -69,17 +69,12 @@ public class GridViewAnswerAdapter extends BaseAdapter {
 
                     if (updateUI) {
                         //Update UI
-//                        GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(context, Common.user_submit_answer, questionFragment);
-//                        questionFragment.gridViewAnswer.setAdapter(answerAdapter);
-//                        answerAdapter.notifyDataSetChanged();
+//
                         GridAdapterUtilities.updateGridAnswerAdapter(context, questionFragment);
 
                         //Remove from suggest source
                         GridAdapterUtilities.updateGridQuestionAdapter(context, questionFragment, indexToRestore, String.valueOf(charAt[0]));
-//                        questionFragment.suggestSource.set(indexToRestore, String.valueOf(charAt[0]));
-//                        questionFragment.suggestAdapter = new GridViewSuggestAdapter(context, questionFragment.suggestSource, questionFragment);
-//                        questionFragment.gridViewSuggest.setAdapter(questionFragment.suggestAdapter);
-//                        questionFragment.suggestAdapter.notifyDataSetChanged();
+//
                     }// else
                       //  Toast.makeText(context, "cant add to answer, please remove first", Toast.LENGTH_SHORT).show();
                 }

@@ -81,7 +81,7 @@ public class QuestionFragment extends Fragment {
         suggestSource = new ArrayList<>();
 
         //  String imgUrl = getArguments().getString("message");
-        SelectQuestion selectQuestion = getArguments().getParcelable("message");
+        SelectQuestion selectQuestion = getArguments().getParcelable(Common.SELECTED_SELECTED_QUESTION_KEY);
         String imgUrl = selectQuestion.getSelectQuestionImgUrl();
         correctAnswer = selectQuestion.getSelectQuestionAnswer();
         correctAnswerCharArr = correctAnswer.toCharArray();
@@ -92,6 +92,8 @@ public class QuestionFragment extends Fragment {
 
         //TODO: DO NOT RESET IF DONE
         if ((!fragmentResume && fragmentVisible) || fragmentResume) {   //only when first time fragment is created
+            boolean isQuestionDone = selectQuestion.isQuestionDone();
+            isQuestionDone = isQuestionDone;
             initGridView(correctAnswer);
         }
 
@@ -179,7 +181,7 @@ public class QuestionFragment extends Fragment {
         //Set for GridView
         GridAdapterUtilities.setUpAnswerAdapter(getActivity(), questionFragment, gridViewAnswer, setupNullList(correctAnswerCharArr));
 
-        GridAdapterUtilities.setUpQuestionAdapter(getActivity(), questionFragment, gridViewSuggest, suggestSource);
+        GridAdapterUtilities.setUpQuestionAdapter(getActivity(), questionFragment, gridViewSuggest);
 
 
     }

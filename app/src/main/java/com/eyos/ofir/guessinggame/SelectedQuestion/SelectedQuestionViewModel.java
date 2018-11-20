@@ -23,4 +23,8 @@ public class SelectedQuestionViewModel extends AndroidViewModel {
     public LiveData<List<SelectQuestion>> getSelectedQuestions(long matchingCategoryId, long matchingSubCategoryId, long matchingDifficultyId) {
         return mainRepo.getSelectedQuestions(matchingCategoryId, matchingSubCategoryId, matchingDifficultyId);
     }
+
+    public void updateQuestionDone(long questionId){
+        mainRepo.updateQuestionDone(questionId);
+    }
 }
