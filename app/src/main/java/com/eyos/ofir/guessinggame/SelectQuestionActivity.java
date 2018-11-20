@@ -6,20 +6,15 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import timber.log.Timber;
 
 import android.os.Bundle;
 
 import com.eyos.ofir.guessinggame.Adapter.Adapter;
-import com.eyos.ofir.guessinggame.Category.Category;
-import com.eyos.ofir.guessinggame.Category.CategoryViewModel;
 import com.eyos.ofir.guessinggame.Difficulty.Difficulty;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectQuestion;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectedQuestionViewModel;
-import com.eyos.ofir.guessinggame.SubCategory.SubCategory;
 import com.eyos.ofir.guessinggame.Utiliteis.GridSpacingItemDecoration;
 import com.eyos.ofir.guessinggame.Utiliteis.PrepareClass;
-import com.eyos.ofir.guessinggame.Utiliteis.TimerUtilites;
 
 import java.util.List;
 
@@ -59,7 +54,7 @@ public class SelectQuestionActivity extends AppCompatActivity {
             }
         });
 
-        PrepareClass.setMainThemereImg(getSelectedDiffuclty().getDifficultyImgUrl(), this, findViewById(R.id.image_view_header));
+        PrepareClass.setMainThemeImg(getSelectedDiffuclty().getDifficultyImgUrl(), this, findViewById(R.id.image_view_header));
     }
 
     private Difficulty getSelectedDiffuclty() {

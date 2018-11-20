@@ -52,7 +52,7 @@ public class DifficultyActivity extends AppCompatActivity {
         });
 
 
-        PrepareClass.setMainThemereImg(subCategory.getSubCategoryImgUrl(), this, findViewById(R.id.image_view_header));
+        PrepareClass.setMainThemeImg(subCategory.getSubCategoryImgUrl(), this, findViewById(R.id.image_view_header));
 
     }
 

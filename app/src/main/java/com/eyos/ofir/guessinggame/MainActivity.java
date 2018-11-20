@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        PrepareClass.setMainThemereImg("https://zululandobserver.co.za/wp-content/uploads/sites/56/2018/07/Movie.jpg",this,  findViewById(R.id.image_view_header));
+        PrepareClass.setMainThemeImg("https://zululandobserver.co.za/wp-content/uploads/sites/56/2018/07/Movie.jpg",this,  findViewById(R.id.image_view_header));
 
 
     }

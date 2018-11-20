@@ -11,7 +11,6 @@ import android.os.Bundle;
 
 import com.eyos.ofir.guessinggame.Adapter.Adapter;
 import com.eyos.ofir.guessinggame.Category.Category;
-import com.eyos.ofir.guessinggame.Difficulty.Difficulty;
 import com.eyos.ofir.guessinggame.SubCategory.SubCategory;
 import com.eyos.ofir.guessinggame.SubCategory.SubCategoryViewModel;
 import com.eyos.ofir.guessinggame.Utiliteis.GridSpacingItemDecoration;
@@ -55,7 +54,7 @@ public class SubCategoryActivity extends AppCompatActivity {
                 });
 
 
-         PrepareClass.setMainThemereImg(category.getCategoryImageUrl(), this, findViewById(R.id.image_view_header));
+         PrepareClass.setMainThemeImg(category.getCategoryImageUrl(), this, findViewById(R.id.image_view_header));
     }
 
     private Category getSelectedCategoryData(){

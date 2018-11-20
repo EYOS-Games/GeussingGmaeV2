@@ -7,7 +7,15 @@ import com.bumptech.glide.Glide;
 
 public class PrepareClass {
 
-    public static void setMainThemereImg(String imgUrl, Context context, ImageView imageView){
+    public static void setMainThemeImg(String imgUrl, Context context, ImageView imageView){
         Glide.with(context).load(imgUrl).into(imageView);
+    }
+
+    public static char[] setupNullList(char[] answer) {
+
+        char result[] = new char[answer.length];
+        for (int i = 0; i < answer.length; i++)
+            result[i] = ' ';
+        return result;
     }
 }

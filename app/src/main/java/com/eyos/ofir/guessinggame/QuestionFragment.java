@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eyos.ofir.guessinggame.Adapter.GridAdapterUtilities;
 import com.eyos.ofir.guessinggame.Adapter.GridViewAnswerAdapter;
 import com.eyos.ofir.guessinggame.Adapter.GridViewSuggestAdapter;
 import com.eyos.ofir.guessinggame.SelectedQuestion.SelectQuestion;
@@ -26,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import static com.eyos.ofir.guessinggame.Utiliteis.PrepareClass.setupNullList;
 
 
 /**
@@ -36,11 +39,11 @@ public class QuestionFragment extends Fragment {
 
     private ImageView imageView;
 
-    public GridViewAnswerAdapter answerAdapter;
+
     public GridViewSuggestAdapter suggestAdapter;
 
     public GridView gridViewAnswer, gridViewSuggest;
-    public List<String> suggestSource, answerSource;
+    public List<String> suggestSource;
 
     public String correctAnswer;
     public char[] correctAnswerCharArr;
@@ -174,24 +177,21 @@ public class QuestionFragment extends Fragment {
 
 
         //Set for GridView
-        answerAdapter = new GridViewAnswerAdapter(getActivity(), setupNullList(correctAnswerCharArr), questionFragment);
-        suggestAdapter = new GridViewSuggestAdapter(getActivity(), suggestSource, questionFragment);
+        GridAdapterUtilities.setUpAnswerAdapter(getActivity(), questionFragment, gridViewAnswer, setupNullList(correctAnswerCharArr));
 
-        answerAdapter.notifyDataSetChanged();
-        suggestAdapter.notifyDataSetChanged();
+        GridAdapterUtilities.setUpQuestionAdapter(getActivity(), questionFragment, gridViewSuggest, suggestSource);
 
-        gridViewSuggest.setAdapter(suggestAdapter);
-        gridViewAnswer.setAdapter(answerAdapter);
+
     }
 
 
-    public char[] setupNullList(char[] answer) {
-
-        char result[] = new char[answer.length];
-        for (int i = 0; i < answer.length; i++)
-            result[i] = ' ';
-        return result;
-    }
+//    public char[] setupNullList(char[] answer) {
+//
+//        char result[] = new char[answer.length];
+//        for (int i = 0; i < answer.length; i++)
+//            result[i] = ' ';
+//        return result;
+//    }
 
 
 }

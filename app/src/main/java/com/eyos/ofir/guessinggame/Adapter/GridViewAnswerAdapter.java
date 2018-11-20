@@ -69,15 +69,17 @@ public class GridViewAnswerAdapter extends BaseAdapter {
 
                     if (updateUI) {
                         //Update UI
-                        GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(context, Common.user_submit_answer, questionFragment);
-                        questionFragment.gridViewAnswer.setAdapter(answerAdapter);
-                        answerAdapter.notifyDataSetChanged();
+//                        GridViewAnswerAdapter answerAdapter = new GridViewAnswerAdapter(context, Common.user_submit_answer, questionFragment);
+//                        questionFragment.gridViewAnswer.setAdapter(answerAdapter);
+//                        answerAdapter.notifyDataSetChanged();
+                        GridAdapterUtilities.updateGridAnswerAdapter(context, questionFragment);
 
                         //Remove from suggest source
-                        questionFragment.suggestSource.set(indexToRestore, String.valueOf(charAt[0]));
-                        questionFragment.suggestAdapter = new GridViewSuggestAdapter(context, questionFragment.suggestSource, questionFragment);
-                        questionFragment.gridViewSuggest.setAdapter(questionFragment.suggestAdapter);
-                        questionFragment.suggestAdapter.notifyDataSetChanged();
+                        GridAdapterUtilities.updateGridQuestionAdapter(context, questionFragment, indexToRestore, String.valueOf(charAt[0]));
+//                        questionFragment.suggestSource.set(indexToRestore, String.valueOf(charAt[0]));
+//                        questionFragment.suggestAdapter = new GridViewSuggestAdapter(context, questionFragment.suggestSource, questionFragment);
+//                        questionFragment.gridViewSuggest.setAdapter(questionFragment.suggestAdapter);
+//                        questionFragment.suggestAdapter.notifyDataSetChanged();
                     }// else
                       //  Toast.makeText(context, "cant add to answer, please remove first", Toast.LENGTH_SHORT).show();
                 }
